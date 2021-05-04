@@ -1,18 +1,36 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import {
   selectUserName,
   selectUserPhoto,
   setUserLogin,
+  setSignOut,
 } from "../user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { auth, provider } from "../firebase";
 
 function Header() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        dispatch(
+          setUserLogin({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+        history.push("/");
+      }
+    });
+  }, []);
 
   const signIn = () => {
     auth.signInWithPopup(provider).then((result) => {
@@ -24,6 +42,14 @@ function Header() {
           photo: user.photoURL,
         })
       );
+      history.push("/");
+    });
+  };
+
+  const signOut = () => {
+    auth.signOut().then(() => {
+      dispatch(setSignOut);
+      history.push("/login");
     });
   };
 
@@ -37,10 +63,10 @@ function Header() {
       ) : (
         <>
           <NavMenu>
-            <a>
+            <Link to="/">
               <img src="/images/home-icon.svg" alt="home" />
               <span>HOME</span>
-            </a>
+            </Link>
             <a>
               <img src="/images/search-icon.svg" alt="search" />
               <span>SEARCH</span>
@@ -62,7 +88,10 @@ function Header() {
               <span>SERIES</span>
             </a>
           </NavMenu>
-          <UserImg src="https://cdn3.iconfinder.com/data/icons/users-yellow/60/50_-Blank_Profile-_user_people_group_team-512.png" />
+          <UserImg
+            onClick={signOut}
+            src="https://cdn3.iconfinder.com/data/icons/users-yellow/60/50_-Blank_Profile-_user_people_group_team-512.png"
+          />
         </>
       )}
     </Nav>
