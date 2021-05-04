@@ -1,18 +1,38 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import styled from "styled-components";
-import { selectUserName, selectUserPhoto } from "../user/userSlice";
-import { useSelector } from "react-redux";
+import {
+  selectUserName,
+  selectUserPhoto,
+  setUserLogin,
+} from "../user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { auth, provider } from "../firebase";
 
 function Header() {
+  const dispatch = useDispatch();
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
+
+  const signIn = () => {
+    auth.signInWithPopup(provider).then((result) => {
+      let user = result.user;
+      dispatch(
+        setUserLogin({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        })
+      );
+    });
+  };
+
   return (
     <Nav>
       <Logo src="/images/logo.svg" />
       {!userName ? (
         <LoginContainer>
-          <Login>Login</Login>
+          <Login onClick={signIn}>Login</Login>
         </LoginContainer>
       ) : (
         <>
