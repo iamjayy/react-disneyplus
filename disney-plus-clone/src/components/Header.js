@@ -12,23 +12,23 @@ function Header() {
           <span>HOME</span>
         </a>
         <a>
-          <img src="/images/search-icon.svg" alt="search" />
+          <img src="/images/search-icon.svg" alt="home" />
           <span>SEARCH</span>
         </a>
         <a>
-          <img src="/images/watchlist-icon.svg" alt="watch" />
+          <img src="/images/watchlist-icon.svg" alt="home" />
           <span>WATCHLIST</span>
         </a>
         <a>
-          <img src="/images/original-icon.svg" alt="originals" />
+          <img src="/images/original-icon.svg" alt="home" />
           <span>ORIGINALS</span>
         </a>
         <a>
-          <img src="/images/movie-icon.svg" alt="movie" />
+          <img src="/images/movie-icon.svg" alt="home" />
           <span>MOVIES</span>
         </a>
         <a>
-          <img src="/images/series-icon.svg" alt="series" />
+          <img src="/images/series-icon.svg" alt="home" />
           <span>SERIES</span>
         </a>
       </NavMenu>
