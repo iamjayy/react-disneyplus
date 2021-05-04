@@ -22,7 +22,7 @@ function Detail() {
   return (
     <Container>
       {movie && (
-        <>
+        <Background>
           <Background>
             <img src={movie.backgroundImg} alt="background" />
           </Background>
@@ -47,7 +47,7 @@ function Detail() {
           </Controls>
           <SubTitle>{movie.subTitle}</SubTitle>
           <Description>{movie.description}</Description>
-        </>
+        </Background>
       )}
     </Container>
   );
